@@ -18,16 +18,15 @@ componentDidMount() {
      });
    }
 
-render(){
+render() {
   return (
-    <div>
-    {
-    this.state.rooms.map ( ( room, key ) =>
-      <p>{room.name}</p>
-    )}
+    <div className="room-list">
+     {this.state.rooms.map( room =>
+       <li key={room.key} >{room.name}</li>
+     )}
     </div>
-   );
-  }
+  )
+}
 }
 
 
