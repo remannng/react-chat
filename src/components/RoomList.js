@@ -6,7 +6,7 @@ class RoomList extends Component {
     super(props);
     this.state = {
     rooms: []
-  };
+  }
   this.roomsRef = firebase.database().ref('rooms');
 }
 
@@ -18,17 +18,17 @@ componentDidMount() {
      });
    }
 
-   render(){
-      return(
-        <div>
-        {
-           this.state.rooms.map ( ( room, key ) =>
-            <p>{room.name}</p>
-          )}
-         </div>
-      );
-     }
-   }
+render(){
+  return (
+    <div>
+    {
+    this.state.rooms.map ( ( room, key ) =>
+      <p>{room.name}</p>
+    )}
+    </div>
+   );
+  }
+}
 
 
 export default RoomList;
