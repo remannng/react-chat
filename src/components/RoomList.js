@@ -9,13 +9,8 @@ class RoomList extends Component {
      name: ''
   };
   this.roomsRef = firebase.database().ref('rooms');
-}
-
-createRoom(newRoomName) {
-  this.roomsRef.push({
-    name: newRoomName
-  });
-  this.setState({name: '' });
+  this.handleChange = this.handleChange.bind(this);
+  this.createRoom = this.createRoom.bind(this);
 }
 
 handleChange(e) {
@@ -27,29 +22,42 @@ handleSubmit(e) {
   this.createRoom(this.state.name);
 }
 
+createRoom(newRoomName) {
+  this.roomsRef.push({name: newRoomName});
+  this.setState({name: '' });
+}
+
+selectRoom(room) {
+  this.props.activeRoom(room);
+}
+
 componentDidMount() {
   this.roomsRef.on('child_added', snapshot => {
     const room = snapshot.val();
     room.key = snapshot.key;
-    this.setState({ rooms: this.state.rooms.concat( room ) })
+    this.setState({rooms: this.state.rooms.concat(room)})
   });
 }
 
 render() {
-  return (
-    <div className="room-list">
-      {this.state.rooms.map( room =>
-        <li key={room.key} >
-         {room.name}
-        </li>
-      )}
-     <form onSubmit={ e => {this.handleSubmit(e)}}>
-      <input type="text" value={this.state.name} onChange={e => {this.handleChange(e)}} />
-      <input type="submit" value="Submit" />
-     </form>
+  const newRoom = (
+    <form onSubmit={this.createRoom}>
+      <input type="text" value={this.state.name} placeholder="Enter Room Name" onChange={this.handleChange} />
+      <input type="submit" value="Create" />
+    </form>
+  );
+
+  const roomList = this.state.rooms.map((room) =>
+    <li key={room.key} onClick={(e) => this.selectRoom(room, e)}>{room.name}</li>
+  );
+
+  return(
+    <div>
+      <div>{newRoom}</div>
+      <ul>{roomList}</ul>
     </div>
-  )
- }
+  );
+}
 }
 
 export default RoomList;
