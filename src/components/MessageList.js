@@ -64,7 +64,7 @@ render() {
   );
 
   return (
-    <div>
+    <div className="MessageList">
       <div>{messageInput}</div>
       <div>{messageList}</div>
     </div>

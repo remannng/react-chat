@@ -52,7 +52,7 @@ render() {
   );
 
   return(
-    <div>
+    <div className ="RoomList">
       <div>{newRoom}</div>
       <ul>{roomList}</ul>
     </div>
