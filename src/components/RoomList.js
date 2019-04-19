@@ -24,7 +24,7 @@ handleSubmit(e) {
 
 createRoom(newRoomName) {
   this.roomsRef.push({name: newRoomName});
-  this.setState({name: '' });
+  this.setState({name:''});
 }
 
 selectRoom(room) {
