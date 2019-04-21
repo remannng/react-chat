@@ -6,7 +6,7 @@ class RoomList extends Component {
     super(props);
     this.state = {
      rooms: [],
-     name: ''
+     name:"",
   };
   this.roomsRef = firebase.database().ref('rooms');
   this.handleChange = this.handleChange.bind(this);
@@ -22,10 +22,12 @@ handleSubmit(e) {
   this.createRoom(this.state.name);
 }
 
-createRoom(newRoomName) {
-  this.roomsRef.push({name: newRoomName});
-  this.setState({name:''});
-}
+createRoom(e) {
+  e.preventDefault();
+    this.roomsRef.push({ name: this.state.name });
+    this.setState({ name: "" });
+  }
+
 
 selectRoom(room) {
   this.props.activeRoom(room);
@@ -48,7 +50,7 @@ render() {
   );
 
   const roomList = this.state.rooms.map((room) =>
-    <li key={room.key} onClick={(e) => this.selectRoom(room, e)}>{room.name}</li>
+    <li key={room.key} onClick={(e) => this.selectRoom(room)}>{room.name}</li>
   );
 
   return(
