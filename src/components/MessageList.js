@@ -27,7 +27,7 @@ componentDidMount() {
 handleChange(e) {
   e.preventDefault();
   this.setState({
-    username: "user",
+    username: this.props.user,
     content: e.target.value,
     sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
     roomId: this.props.activeRoom
@@ -47,6 +47,7 @@ createMessage(e) {
 
 render() {
   const activeRoom = this.props.activeRoom;
+
   const messageInput = (
     <form onSubmit={this.createMessage}>
       <input type="text" value={this.state.content} placeholder="Enter Message" onChange={this.handleChange} />

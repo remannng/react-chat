@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
+import './App.css';
+import User from './components/User';
 import * as firebase from 'firebase';
 
 
@@ -23,6 +25,12 @@ constructor(props){
     activeRoom: "",
     user: "",
   };
+
+  this.state = {activeRoom: "",
+  user: null
+};
+this.setUser = this.setUser.bind(this);
+this.activeRoom = this.activeRoom.bind(this);
 }
 
 setUser(user) {
@@ -34,16 +42,21 @@ activeRoom(room) {
 }
 
 render() {
-  const displayMessages = this.state.activeRoom;
+   const showMessage = this.state.activeRoom;
+   const currentUser = this.state.user === null ? "Guest" : this.state.user.displayName;
 
-    return (
-      <div className="App">
-        <h1>Bloc Chat</h1>
-        <RoomList firebase={firebase} activeRoom={this.activeRoom.bind(this)}/>
-        {displayMessages ?(<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} />): (null)}
-      </div>
-      );
-    }
-  }
+   return (
+     <div>
+       <h1>{this.state.activeRoom.title || "Select A Room"}</h1>
+       <User firebase={firebase} setUser={this.setUser} welcome={currentUser} />
+       <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+       { showMessage ?
+         <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={currentUser} />
+       : null
+       }
+     </div>
+   );
+ }
+}
 
 export default App;
